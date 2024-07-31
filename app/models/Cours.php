@@ -1,15 +1,15 @@
 <?php 
 
 // models/Cours.php
-class Cours extends BaseModel {
-    public $id;
-    public $nom;
-    public $etudiants = [];
+class Cours {
+    private $id;
+    private $nom;
+    private $etudiants;
 
-    public function __construct($id = null, $nom = null) {
-        parent::__construct();
+    public function __construct($id, $nom) {
         $this->id = $id;
         $this->nom = $nom;
+        $this->etudiants = [];
     }
 
     public function ajouterEtudiant(Etudiant $etudiant) {
@@ -17,10 +17,12 @@ class Cours extends BaseModel {
     }
 
     public function supprimerEtudiant(Etudiant $etudiant) {
-        // Suppression d'un étudiant
+        // Suppression logique de l'étudiant du cours
     }
 
     public function getEtudiants() {
         return $this->etudiants;
     }
+
+    // Autres méthodes getters et setters
 }

@@ -1,21 +1,22 @@
 <?php
 
 // models/Inscription.php
-class Inscription extends BaseModel {
-    public $etudiant;
-    public $cours;
+class Inscription {
+    private $etudiant;
+    private $cours;
 
     public function __construct(Etudiant $etudiant, Cours $cours) {
-        parent::__construct();
         $this->etudiant = $etudiant;
         $this->cours = $cours;
     }
 
     public function inscrire() {
-        // Ajouter l'étudiant au cours et le cours à l'étudiant
+        $this->etudiant->ajouterCours($this->cours);
+        $this->cours->ajouterEtudiant($this->etudiant);
     }
 
     public function desinscrire() {
-        // Supprimer l'étudiant du cours et le cours de l'étudiant
+        $this->etudiant->supprimerCours($this->cours);
+        $this->cours->supprimerEtudiant($this->etudiant);
     }
 }

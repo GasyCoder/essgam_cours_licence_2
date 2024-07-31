@@ -65,3 +65,12 @@ Contrôleur : Interagit avec le modèle pour obtenir ou mettre à jour les donn�
 
 NB : les modèles s'occupent des données et des règles métier, tandis que les contrôleurs s'occupent des requêtes utilisateur et de la coordination entre les modèles et les vues.
 
+
+4. Rélation POO et la Structure du code
+
+La relation entre la Programmation Orientée Objet (POO) et la structure du code, notamment dans un modèle MVC (Modèle-Vue-Contrôleur), est fondamentale pour organiser le code de manière modulaire, réutilisable et maintenable. Voici comment les concepts de POO se rapportent à la structure du code et comment ils sont appliqués dans une architecture MVC.
+
+## Model Etudiant :
+ce quoi le mot clé parent? 
+
+le mot-clé parent:: est utilisé pour appeler une méthode du parent de la classe courante. Plus précisément, parent::__construct() appelle le constructeur de la classe parente. 
