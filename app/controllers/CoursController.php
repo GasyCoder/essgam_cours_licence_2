@@ -1,6 +1,9 @@
 <?php
 
-// controllers/CoursController.php
+namespace App\Controllers;
+
+use App\Models\Cours;
+
 class CoursController extends BaseController {
     public function index() {
         $cours = Cours::all();
@@ -40,3 +43,4 @@ class CoursController extends BaseController {
         header('Location: /cours');
     }
 }
+

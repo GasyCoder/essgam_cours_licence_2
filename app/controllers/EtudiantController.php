@@ -1,5 +1,9 @@
 <?php
-// controllers/EtudiantController.php
+
+namespace App\Controllers;
+
+use App\Models\Etudiant;
+
 class EtudiantController extends BaseController {
     public function index() {
         $etudiants = Etudiant::all();
@@ -39,3 +43,4 @@ class EtudiantController extends BaseController {
         header('Location: /etudiants');
     }
 }
+

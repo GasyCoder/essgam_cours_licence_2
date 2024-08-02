@@ -1,5 +1,7 @@
 <?php
-// controllers/BaseController.php
+
+namespace App\Controllers;
+
 class BaseController {
     protected function render($view, $data = []) {
         extract($data);

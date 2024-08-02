@@ -1,5 +1,9 @@
 <?php
-// models/BaseModel.php
+
+namespace App\Models;
+
+use PDO;
+
 class BaseModel {
     protected $pdo;
 
@@ -8,3 +12,4 @@ class BaseModel {
         $this->pdo = new PDO("mysql:host={$config['host']};dbname={$config['dbname']}", $config['user'], $config['password']);
     }
 }
+?>

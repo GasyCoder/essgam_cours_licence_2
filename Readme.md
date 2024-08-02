@@ -26,6 +26,55 @@
    - Assurer la configuration du point d'entrée dans le fichier `public/index.php`.
 
 
+6. ** Structure du Projet
+
+Voici la structure de répertoires du projet :
+
+
+
+## Description des Répertoires
+
+- **app/** : Contient le code principal de l'application.
+  - **Controllers/** : Contient les contrôleurs qui gèrent les interactions utilisateur et la logique de l'application.
+    - `BaseController.php` : Contrôleur de base pour les fonctions communes.
+    - `EtudiantController.php` : Gère les opérations liées aux étudiants.
+    - `CoursController.php` : Gère les opérations liées aux cours.
+    - `InscriptionController.php` : Gère les inscriptions des étudiants aux cours.
+  - **Models/** : Contient les modèles représentant les entités du domaine.
+    - `BaseModel.php` : Modèle de base pour les fonctionnalités partagées.
+    - `Etudiant.php` : Modèle représentant un étudiant.
+    - `Cours.php` : Modèle représentant un cours.
+    - `Inscription.php` : Modèle représentant une inscription.
+  - **views/** : Contient les vues de l'application.
+    - **etudiants/** : Vues pour gérer les étudiants.
+      - `index.blade.php` : Liste des étudiants.
+      - `create.blade.php` : Formulaire pour ajouter un nouvel étudiant.
+      - `edit.blade.php` : Formulaire pour modifier un étudiant existant.
+      - `show.blade.php` : Affichage des détails d'un étudiant.
+    - **cours/** : Vues pour gérer les cours.
+      - `index.blade.php` : Liste des cours.
+      - `create.blade.php` : Formulaire pour ajouter un nouveau cours.
+      - `edit.blade.php` : Formulaire pour modifier un cours existant.
+      - `show.blade.php` : Affichage des détails d'un cours.
+    - **inscriptions/** : Vues pour gérer les inscriptions.
+      - `index.blade.php` : Liste des inscriptions.
+      - `create.blade.php` : Formulaire pour ajouter une nouvelle inscription.
+
+- **config/** : Contient les fichiers de configuration de l'application.
+  - `database.php` : Configuration de la base de données.
+
+- **public/** : Contient les fichiers accessibles publiquement.
+  - `index.php` : Point d'entrée de l'application.
+
+- **vendor/** : Contient les dépendances de Composer.
+  - `autoload.php` : Fichier généré par Composer pour l'autoloading.
+
+- **composer.json** : Fichier de configuration de Composer pour gérer les dépendances PHP.
+- **composer.lock** : Fichier généré par Composer pour verrouiller les versions des dépendances.
+
+## Installation
+   `composer install`
+
 
 ## Léçons :
 
@@ -69,6 +118,82 @@ NB : les modèles s'occupent des données et des règles métier, tandis que les
 4. Rélation POO et la Structure du code
 
 La relation entre la Programmation Orientée Objet (POO) et la structure du code, notamment dans un modèle MVC (Modèle-Vue-Contrôleur), est fondamentale pour organiser le code de manière modulaire, réutilisable et maintenable. Voici comment les concepts de POO se rapportent à la structure du code et comment ils sont appliqués dans une architecture MVC.
+
+
+## BaseController
+
+La classe `BaseController` est une classe de base pour les contrôleurs dans notre application PHP. Elle fournit une méthode utile pour rendre les vues avec les données nécessaires.
+
+### Contenu du Fichier
+
+```php
+<?php
+
+namespace App\Controllers;
+
+class BaseController {
+    protected function render($view, $data = []) {
+        extract($data);
+        require __DIR__ . '/../views/' . $view . '.php';
+    }
+}
+
+
+## BaseModel
+
+La classe `BaseModel` est une classe de base pour les modèles dans notre application PHP. Elle fournit des fonctionnalités communes pour interagir avec la base de données.
+
+### Contenu du Fichier
+
+```php
+<?php
+
+namespace App\Models;
+
+use PDO;
+
+class BaseModel {
+    protected $pdo;
+    protected $table;
+
+    public function __construct(PDO $pdo, $table) {
+        $this->pdo = $pdo;
+        $this->table = $table;
+    }
+
+    public function find($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function all() {
+        $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function create(array $data) {
+        $columns = implode(', ', array_keys($data));
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})");
+        $stmt->execute(array_values($data));
+        return $this->pdo->lastInsertId();
+    }
+
+    public function update($id, array $data) {
+        $set = implode(', ', array_map(fn($key) => "{$key} = ?", array_keys($data)));
+        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET {$set} WHERE id = ?");
+        $data[] = $id;
+        return $stmt->execute(array_values($data));
+    }
+
+    public function delete($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+}
+
+
 
 ## Model Etudiant :
 ce quoi le mot clé parent? 

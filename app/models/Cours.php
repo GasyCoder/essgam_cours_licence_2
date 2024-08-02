@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-// models/Cours.php
+namespace App\Models;
+
 class Cours {
     private $id;
     private $nom;
@@ -26,3 +27,4 @@ class Cours {
 
     // Autres méthodes getters et setters
 }
+

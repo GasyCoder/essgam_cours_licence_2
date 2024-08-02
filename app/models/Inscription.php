@@ -1,6 +1,7 @@
 <?php
 
-// models/Inscription.php
+namespace App\Models;
+
 class Inscription {
     private $etudiant;
     private $cours;
@@ -20,3 +21,4 @@ class Inscription {
         $this->cours->supprimerEtudiant($this->etudiant);
     }
 }
+

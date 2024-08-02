@@ -1,6 +1,11 @@
 <?php
 
-// controllers/InscriptionController.php
+namespace App\Controllers;
+
+use App\Models\Etudiant;
+use App\Models\Cours;
+use App\Models\Inscription;
+
 class InscriptionController extends BaseController {
     public function index() {
         $inscriptions = Inscription::all();
@@ -29,3 +34,4 @@ class InscriptionController extends BaseController {
         header('Location: /inscriptions');
     }
 }
+
